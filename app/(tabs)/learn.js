@@ -1,47 +1,46 @@
+import { useState } from 'react';
 import { ScrollView, Text, View, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Card from '../../components/Card';
 import Sticker from '../../components/Sticker';
-import Blob from '../../components/Blob';
-import Button from '../../components/Button';
+import HazardCard from '../../components/HazardCard';
+import HazardDetailModal from '../../components/HazardDetailModal';
+import { hazards } from '../../data/hazards';
 import { theme } from '../../theme';
 
 export default function LearnScreen() {
+  const [selectedHazard, setSelectedHazard] = useState(null);
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.heading}>Learn</Text>
-        <Text style={styles.subheading}>Previewing our design language</Text>
-
-        <Card color={theme.colors.lilac} style={styles.card}>
-          <View style={styles.blobAnchor}>
-            <Blob color={theme.colors.mint} size={theme.blobSize.md} />
-          </View>
-          <Sticker label="5 MIN READ" color={theme.colors.yellow} />
-          <Text style={styles.cardTitle}>Why E-Waste Matters</Text>
-          <Text style={styles.bodyText}>
-            Discarded electronics release toxic chemicals into the soil and water. Learn how
-            responsible recycling keeps heavy metals safe.
-          </Text>
-          <View style={styles.buttonRow}>
-            <Button title="Start Reading" style={styles.button} />
-            <Button title="Save" variant="ghost" style={styles.button} />
-          </View>
-        </Card>
-
-        <Card color={theme.colors.pink} style={styles.card}>
+        <View style={styles.header}>
           <Sticker
-            label="QUICK TIP"
-            color={theme.colors.mint}
-            rotate={theme.rotation.slightPos}
+            label="ACADEMY"
+            color={theme.colors.yellow}
+            rotate={theme.rotation.slightNeg}
           />
-          <Text style={styles.cardTitle}>Lithium Batteries</Text>
-          <Text style={styles.bodyText}>
-            Never throw swollen batteries into domestic bins. Tape the terminals before dropping
-            them at a certified facility.
+          <Text style={styles.heading}>Knowledge is power</Text>
+          <Text style={styles.subheading}>
+            Understand hazardous elements inside electronics and why responsible recycling matters.
           </Text>
-        </Card>
+        </View>
+
+        <View style={styles.list}>
+          {hazards.map((item) => (
+            <HazardCard
+              key={item.id}
+              item={item}
+              onPress={() => setSelectedHazard(item)}
+            />
+          ))}
+        </View>
       </ScrollView>
+
+      <HazardDetailModal
+        hazard={selectedHazard}
+        visible={Boolean(selectedHazard)}
+        onClose={() => setSelectedHazard(null)}
+      />
     </SafeAreaView>
   );
 }
@@ -54,6 +53,10 @@ const styles = StyleSheet.create({
   container: {
     padding: theme.spacing.xl,
     gap: theme.spacing.xl,
+    paddingBottom: theme.spacing.huge,
+  },
+  header: {
+    gap: theme.spacing.sm,
   },
   heading: {
     fontFamily: theme.fonts.heading,
@@ -63,37 +66,11 @@ const styles = StyleSheet.create({
   },
   subheading: {
     fontFamily: theme.fonts.body,
-    fontSize: theme.fontSize.md,
-    lineHeight: theme.lineHeight.md,
-    color: theme.colors.greyDark,
-    marginTop: -theme.spacing.sm,
-  },
-  card: {
-    gap: theme.spacing.md,
-  },
-  blobAnchor: {
-    position: 'absolute',
-    top: -theme.spacing.lg,
-    right: -theme.spacing.lg,
-  },
-  cardTitle: {
-    fontFamily: theme.fonts.bold,
-    fontSize: theme.fontSize.xl,
-    lineHeight: theme.lineHeight.xl,
-    color: theme.colors.black,
-  },
-  bodyText: {
-    fontFamily: theme.fonts.body,
     fontSize: theme.fontSize.sm,
     lineHeight: theme.lineHeight.sm,
-    color: theme.colors.black,
+    color: theme.colors.greyDark,
   },
-  buttonRow: {
-    flexDirection: 'row',
-    gap: theme.spacing.sm,
-    marginTop: theme.spacing.xs,
-  },
-  button: {
-    flex: 1,
+  list: {
+    gap: theme.spacing.lg,
   },
 });

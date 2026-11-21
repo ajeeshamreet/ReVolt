@@ -1,11 +1,13 @@
 import { View, StyleSheet } from 'react-native';
 import MapContainer from '../../components/MapContainer';
+import DidYouKnowModal from '../../components/DidYouKnowModal';
 import { theme } from '../../theme';
 
 export default function MapScreen() {
   return (
     <View style={styles.container}>
       <MapContainer />
+      <DidYouKnowModal />
     </View>
   );
 }

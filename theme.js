@@ -11,6 +11,8 @@ export const theme = {
     pink: '#F7B6E6',
     green: '#1F8A4C',
     bgPink: '#FFD3F2',
+    blue: '#D2EAFF',
+    orange: '#FFE3CC',
     border: '#000000',
     borderLight: '#E0E0E0',
     text: '#000000',
@@ -95,6 +97,10 @@ export const theme = {
   controls: {
     searchHeight: 46,
     chipHeight: 34,
+  },
+  image: {
+    cardHeight: 160,
+    modalHeight: 220,
   },
   blobSize: {
     sm: 64,
