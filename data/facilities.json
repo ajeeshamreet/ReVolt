@@ -1,0 +1,222 @@
+[
+  {
+    "id": "fac-1",
+    "name": "EcoRecycle City Center",
+    "address": "MG Road, Bengaluru (Placeholder)",
+    "lat": 12.9752,
+    "lng": 77.6083,
+    "phone": "+91 80 2558 1001",
+    "hours": "09:00-19:00",
+    "accepts": ["phones", "laptops", "batteries", "cables"],
+    "authorised": true
+  },
+  {
+    "id": "fac-2",
+    "name": "Koramangala CleanTech Depot",
+    "address": "80 Feet Rd, 4th Block, Koramangala (Placeholder)",
+    "lat": 12.9345,
+    "lng": 77.6265,
+    "phone": "+91 80 2553 2002",
+    "hours": "10:00-18:00",
+    "accepts": ["phones", "laptops", "cables", "tv"],
+    "authorised": true
+  },
+  {
+    "id": "fac-3",
+    "name": "Indiranagar Green Station",
+    "address": "100 Feet Rd, Indiranagar (Placeholder)",
+    "lat": 12.9784,
+    "lng": 77.6408,
+    "phone": "+91 80 2521 3003",
+    "hours": "09:30-18:30",
+    "accepts": ["phones", "batteries", "appliances", "cables"],
+    "authorised": true
+  },
+  {
+    "id": "fac-4",
+    "name": "Whitefield IT Circular Depot",
+    "address": "ITPB Main Rd, Whitefield (Placeholder)",
+    "lat": 12.9868,
+    "lng": 77.7378,
+    "phone": "+91 80 2841 4004",
+    "hours": "10:00-19:00",
+    "accepts": ["phones", "laptops", "batteries", "appliances", "tv", "cables"],
+    "authorised": true
+  },
+  {
+    "id": "fac-5",
+    "name": "HSR Layout E-Drop Hub",
+    "address": "Sector 1, HSR Layout (Placeholder)",
+    "lat": 12.9116,
+    "lng": 77.6389,
+    "phone": "+91 80 2572 5005",
+    "hours": "10:00-18:00",
+    "accepts": ["phones", "laptops", "batteries"],
+    "authorised": false
+  },
+  {
+    "id": "fac-6",
+    "name": "Jayanagar Community Recovery",
+    "address": "4th T Block, Jayanagar (Placeholder)",
+    "lat": 12.9255,
+    "lng": 77.5938,
+    "phone": "+91 80 2663 6006",
+    "hours": "09:00-17:30",
+    "accepts": ["phones", "batteries", "cables"],
+    "authorised": true
+  },
+  {
+    "id": "fac-7",
+    "name": "Malleshwaram Safe Recycling",
+    "address": "Sampige Rd, Malleshwaram (Placeholder)",
+    "lat": 13.0031,
+    "lng": 77.5706,
+    "phone": "+91 80 2334 7007",
+    "hours": "10:00-18:00",
+    "accepts": ["appliances", "tv", "cables"],
+    "authorised": true
+  },
+  {
+    "id": "fac-8",
+    "name": "Electronic City E-Waste Point",
+    "address": "Phase 1, Hosur Rd, Electronic City (Placeholder)",
+    "lat": 12.8452,
+    "lng": 77.6602,
+    "phone": "+91 80 2852 8008",
+    "hours": "08:30-18:30",
+    "accepts": ["phones", "laptops", "batteries", "cables"],
+    "authorised": true
+  },
+  {
+    "id": "fac-9",
+    "name": "Hebbal Eco Warehouse",
+    "address": "Bellary Rd, Hebbal (Placeholder)",
+    "lat": 13.0358,
+    "lng": 77.597,
+    "phone": "+91 80 2353 9009",
+    "hours": "10:00-18:00",
+    "accepts": ["appliances", "tv", "laptops"],
+    "authorised": false
+  },
+  {
+    "id": "fac-10",
+    "name": "Marathahalli Circular Hub",
+    "address": "Outer Ring Rd, Marathahalli (Placeholder)",
+    "lat": 12.9591,
+    "lng": 77.6974,
+    "phone": "+91 80 2523 0010",
+    "hours": "10:00-19:00",
+    "accepts": ["phones", "laptops", "cables"],
+    "authorised": true
+  },
+  {
+    "id": "fac-11",
+    "name": "Rajajinagar Device Recovery",
+    "address": "1st Block, Rajajinagar (Placeholder)",
+    "lat": 12.9982,
+    "lng": 77.553,
+    "phone": "+91 80 2315 1011",
+    "hours": "09:30-18:00",
+    "accepts": ["phones", "batteries", "cables"],
+    "authorised": true
+  },
+  {
+    "id": "fac-12",
+    "name": "Banashankari Green Depository",
+    "address": "Outer Ring Rd, Banashankari 3rd Stage (Placeholder)",
+    "lat": 12.925,
+    "lng": 77.5467,
+    "phone": "+91 80 2679 2012",
+    "hours": "10:00-18:00",
+    "accepts": ["appliances", "tv"],
+    "authorised": true
+  },
+  {
+    "id": "fac-13",
+    "name": "BTM Layout Battery Collection",
+    "address": "2nd Stage, BTM Layout (Placeholder)",
+    "lat": 12.9166,
+    "lng": 77.6101,
+    "phone": "+91 80 2668 3013",
+    "hours": "10:00-19:00",
+    "accepts": ["batteries", "phones", "cables"],
+    "authorised": false
+  },
+  {
+    "id": "fac-14",
+    "name": "Bellandur Eco Hub",
+    "address": "Sarjapur-Marathahalli Rd, Bellandur (Placeholder)",
+    "lat": 12.926,
+    "lng": 77.6762,
+    "phone": "+91 80 2574 4014",
+    "hours": "09:00-18:00",
+    "accepts": ["phones", "laptops", "batteries", "cables"],
+    "authorised": true
+  },
+  {
+    "id": "fac-15",
+    "name": "Yeshwanthpur Industrial Recyclers",
+    "address": "Tumkur Rd, Yeshwanthpur (Placeholder)",
+    "lat": 13.0281,
+    "lng": 77.5409,
+    "phone": "+91 80 2337 5015",
+    "hours": "08:00-17:00",
+    "accepts": ["appliances", "tv", "laptops", "cables"],
+    "authorised": true
+  },
+  {
+    "id": "fac-16",
+    "name": "Frazer Town Green Drop",
+    "address": "Coles Rd, Frazer Town (Placeholder)",
+    "lat": 12.9968,
+    "lng": 77.6133,
+    "phone": "+91 80 2548 6016",
+    "hours": "10:00-18:00",
+    "accepts": ["phones", "cables"],
+    "authorised": true
+  },
+  {
+    "id": "fac-17",
+    "name": "Yelahanka North Depot",
+    "address": "BB Rd, Yelahanka (Placeholder)",
+    "lat": 13.1007,
+    "lng": 77.5963,
+    "phone": "+91 80 2856 7017",
+    "hours": "09:30-17:30",
+    "accepts": ["phones", "laptops", "batteries", "appliances"],
+    "authorised": true
+  },
+  {
+    "id": "fac-18",
+    "name": "Kalyan Nagar Eco Point",
+    "address": "CMR Rd, HRBR Layout, Kalyan Nagar (Placeholder)",
+    "lat": 13.0221,
+    "lng": 77.6403,
+    "phone": "+91 80 2545 8018",
+    "hours": "10:00-18:30",
+    "accepts": ["phones", "batteries", "cables"],
+    "authorised": false
+  },
+  {
+    "id": "fac-19",
+    "name": "Sarjapur Road Recycling Facility",
+    "address": "Carmelaram, Sarjapur Rd (Placeholder)",
+    "lat": 12.9081,
+    "lng": 77.7015,
+    "phone": "+91 80 2844 9019",
+    "hours": "09:00-18:00",
+    "accepts": ["appliances", "tv", "laptops", "cables"],
+    "authorised": true
+  },
+  {
+    "id": "fac-20",
+    "name": "Basavanagudi Heritage Drop",
+    "address": "Bull Temple Rd, Basavanagudi (Placeholder)",
+    "lat": 12.9422,
+    "lng": 77.5681,
+    "phone": "+91 80 2661 0020",
+    "hours": "10:00-17:00",
+    "accepts": ["phones", "batteries", "cables"],
+    "authorised": true
+  }
+]

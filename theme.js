@@ -41,6 +41,7 @@ export const theme = {
     none: 0,
     thin: 1,
     card: 2,
+    thick: 3,
   },
   rotation: {
     slightNeg: '-3deg',
@@ -68,9 +69,22 @@ export const theme = {
     xxl: 36,
   },
   iconSize: {
+    xs: 14,
     sm: 18,
     md: 24,
     lg: 28,
+  },
+  marker: {
+    userRing: 22,
+    userDot: 10,
+    facilitySize: 32,
+    facilitySizeSelected: 44,
+    facilityIcon: 16,
+    facilityIconSelected: 22,
+  },
+  map: {
+    latitudeDelta: 0.1,
+    longitudeDelta: 0.1,
   },
   blobSize: {
     sm: 64,
