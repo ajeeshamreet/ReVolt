@@ -12,6 +12,11 @@
     },
     "android": {
       "package": "com.revolt.app",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDummyPlaceholderKeySoAppDoesNotCrash"
+        }
+      },
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
