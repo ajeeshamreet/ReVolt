@@ -8,7 +8,7 @@ ReVolt is an editorial mobile app built with Expo and React Native that connects
 
 - **Minimalist Interactive Map**: Uber-style greyscale Google/Apple map featuring custom green teardrop pins with white Mobius recycling emblems, user distance calculation, real-time opening hours parser, interactive bottom sheet, floating search bar, and category filter chips.
 - **Friendly Fallback Banner**: Graceful location permission handling that informs users when permission is denied and provides a one-tap action to center on Bengaluru City Centre.
-- **Onboarding Walkthrough**: 3 swipeable pastel editorial slides (Find, Learn, Earn) with pagination dots and AsyncStorage persistence shown on first launch.
+- **Onboarding Walkthrough**: 3 swipeable pastel editorial slides (Find, Learn, Earn) with pagination dots and dual actions: "Home" (shows on reloads) and "Don't show again" (permanently silences popup).
 - **Academy (Learn Tab)**: Bold editorial cards with Bricolage Grotesque typography, sticker badges, SVG blob shapes, hardware photographs, and color-matched full-screen modals detailing chemical hazards (Lead, Mercury, Cadmium, Lithium-ion, BFRs, and Precious Metals).
 - **Metals & Points Calculator (Recycle Tab)**: Interactive device grid with 12 consumer electronic gadgets, working vs. damaged condition multipliers, live animated points counter, and recovered gold, silver, and copper breakdowns.
 - **Drop-off Logging & Impact Wallet**: One-tap facility drop-off logger with facility picker sheet, light haptic feedback (`expo-haptics`), celebratory spring-scale sticker animation, and an impact wallet displaying total eco-points, level badges (Seedling 🌱, Sprout 🌿, Tree 🌳), and drop-off history.
