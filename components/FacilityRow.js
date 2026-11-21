@@ -5,8 +5,16 @@ import { theme } from '../theme';
 
 export default function FacilityRow({ facility, isSelected, onPress }) {
   const isOpen = isOpenNow(facility.hours);
+  const isNearlyFull = Boolean(facility.nearlyFull || facility.status === 'nearly_full');
+
+  const statusLabel = !isOpen ? 'Closed' : isNearlyFull ? 'Nearly full' : 'Open now';
+  const statusColor = !isOpen
+    ? theme.colors.statusClosed
+    : isNearlyFull
+    ? theme.colors.statusNearlyFull
+    : theme.colors.statusOpen;
+
   const kmText = facility.km != null ? `${facility.km} km · ` : '';
-  const statusText = `${kmText}${isOpen ? 'Open now' : 'Closed'}`;
 
   return (
     <Pressable
@@ -21,7 +29,10 @@ export default function FacilityRow({ facility, isSelected, onPress }) {
         <Text style={styles.name} numberOfLines={1}>
           {facility.name}
         </Text>
-        <Text style={styles.status}>{statusText}</Text>
+        <View style={styles.statusRow}>
+          <View style={[styles.statusDot, { backgroundColor: statusColor }]} />
+          <Text style={styles.status}>{kmText}{statusLabel}</Text>
+        </View>
       </View>
       <Ionicons
         name="chevron-forward"
@@ -43,27 +54,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: theme.borderWidth.thin,
     borderBottomColor: theme.colors.greyMedium,
   },
-  selectedRow: {
-    backgroundColor: theme.colors.greyLight,
-  },
-  pressed: {
-    opacity: 0.7,
-  },
-  textContainer: {
-    flex: 1,
-    paddingRight: theme.spacing.md,
-  },
-  name: {
-    fontFamily: theme.fonts.bold,
-    fontSize: theme.fontSize.md,
-    lineHeight: theme.lineHeight.md,
-    color: theme.colors.black,
-  },
-  status: {
-    fontFamily: theme.fonts.body,
-    fontSize: theme.fontSize.sm,
-    lineHeight: theme.lineHeight.sm,
-    color: theme.colors.textSecondary,
-    marginTop: theme.spacing.xs,
-  },
+  selectedRow: { backgroundColor: theme.colors.greyLight },
+  pressed: { opacity: 0.7 },
+  textContainer: { flex: 1, paddingRight: theme.spacing.md },
+  name: { fontFamily: theme.fonts.bold, fontSize: theme.fontSize.md, lineHeight: theme.lineHeight.md, color: theme.colors.black },
+  statusRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: theme.spacing.xs },
+  statusDot: { width: 8, height: 8, borderRadius: 4 },
+  status: { fontFamily: theme.fonts.body, fontSize: theme.fontSize.sm, color: theme.colors.textSecondary },
 });

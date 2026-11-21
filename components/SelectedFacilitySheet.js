@@ -18,8 +18,8 @@ export default function SelectedFacilitySheet({ facility, onBack }) {
             <Sticker label={`${facility.km} km away`} color={theme.colors.mint} />
           )}
           <Sticker
-            label={isOpen ? 'Open now' : 'Closed'}
-            color={isOpen ? theme.colors.yellow : theme.colors.greyMedium}
+            label={!isOpen ? 'Closed' : facility.nearlyFull ? 'Nearly full' : 'Open now'}
+            color={!isOpen ? theme.colors.greyMedium : facility.nearlyFull ? theme.colors.orange : theme.colors.yellow}
           />
           {facility.authorised && (
             <Sticker label="Authorised ✓" color={theme.colors.lilac} />

@@ -19,7 +19,8 @@
     "phone": "+91 80 4168 9389",
     "hours": "09:30-18:00",
     "accepts": ["phones", "laptops", "batteries", "cables"],
-    "authorised": true
+    "authorised": true,
+    "nearlyFull": true
   },
   {
     "id": "blr-3",
@@ -39,7 +40,7 @@
     "lat": 12.9345,
     "lng": 77.6265,
     "phone": "+91 80 2553 2002",
-    "hours": "10:00-18:00",
+    "hours": "07:00-11:00",
     "accepts": ["phones", "laptops", "cables", "tv"],
     "authorised": true
   },
@@ -52,7 +53,8 @@
     "phone": "+91 80 2841 4004",
     "hours": "10:00-19:00",
     "accepts": ["phones", "laptops", "batteries", "appliances", "tv", "cables"],
-    "authorised": true
+    "authorised": true,
+    "nearlyFull": true
   },
   {
     "id": "blr-6",
@@ -72,7 +74,7 @@
     "lat": 28.5355,
     "lng": 77.2732,
     "phone": "+91 11 4056 7890",
-    "hours": "09:00-18:00",
+    "hours": "07:30-11:30",
     "accepts": ["phones", "laptops", "batteries", "cables", "appliances", "tv"],
     "authorised": true
   },
@@ -85,7 +87,8 @@
     "phone": "+91 11 2341 5500",
     "hours": "09:30-18:30",
     "accepts": ["phones", "laptops", "batteries", "cables"],
-    "authorised": true
+    "authorised": true,
+    "nearlyFull": true
   },
   {
     "id": "ncr-1",
@@ -140,7 +143,8 @@
     "phone": "+91 22 2659 1100",
     "hours": "10:00-18:00",
     "accepts": ["phones", "laptops", "batteries", "cables"],
-    "authorised": true
+    "authorised": true,
+    "nearlyFull": true
   },
   {
     "id": "mum-3",
@@ -149,7 +153,7 @@
     "lat": 19.0748,
     "lng": 73.0185,
     "phone": "+91 22 2768 4400",
-    "hours": "09:00-18:00",
+    "hours": "07:00-11:30",
     "accepts": ["phones", "laptops", "batteries", "appliances", "tv"],
     "authorised": true
   },

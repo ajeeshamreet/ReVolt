@@ -8,7 +8,7 @@ export default function FacilityMarker({ facility, isSelected, onSelect }) {
       anchor={{ x: 0.5, y: 1 }}
       onPress={onSelect}
     >
-      <FacilityPin isSelected={isSelected} />
+      <FacilityPin facility={facility} isSelected={isSelected} />
     </Marker>
   );
 }
