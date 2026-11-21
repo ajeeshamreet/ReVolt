@@ -61,6 +61,7 @@ export const theme = {
     lg: 20,
     xl: 24,
     xxl: 32,
+    hero: 44,
   },
   lineHeight: {
     xs: 16,
@@ -69,6 +70,7 @@ export const theme = {
     lg: 26,
     xl: 30,
     xxl: 36,
+    hero: 48,
   },
   iconSize: {
     xs: 14,
