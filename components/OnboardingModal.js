@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
-import { Modal, View, Text, ScrollView, Pressable, Dimensions, StyleSheet } from 'react-native';
+import { Modal, View, Text, ScrollView, Dimensions, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import Sticker from './Sticker';
 import Button from './Button';
-import Blob from './Blob';
+import NeoPill from './NeoPill';
+import OnboardingBackdrop from './OnboardingBackdrop';
 import { ONBOARDING_SLIDES } from '../data/onboarding';
 import { theme } from '../theme';
 
@@ -41,15 +42,14 @@ export default function OnboardingModal() {
   };
 
   if (!visible) return null;
+  const currentSlide = ONBOARDING_SLIDES[activeIndex];
 
   return (
     <Modal visible={visible} animationType="fade">
-      <SafeAreaView style={[styles.container, { backgroundColor: ONBOARDING_SLIDES[activeIndex].color }]}>
-        <View style={styles.blobAnchor}><Blob color={theme.colors.white} size={theme.blobSize.lg} /></View>
+      <SafeAreaView style={[styles.container, { backgroundColor: currentSlide.color }]}>
+        <OnboardingBackdrop shapeType={currentSlide.shapeType} />
         <View style={styles.topBar}>
-          <Pressable onPress={() => setVisible(false)} style={styles.skipBtn} hitSlop={theme.spacing.sm}>
-            <Text style={styles.skipText}>Home ➔</Text>
-          </Pressable>
+          {!isLast && <NeoPill title="Home" onPress={() => setVisible(false)} />}
         </View>
         <ScrollView
           ref={scrollRef}
@@ -58,9 +58,9 @@ export default function OnboardingModal() {
           showsHorizontalScrollIndicator={false}
           onMomentumScrollEnd={(e) => setActiveIndex(Math.round(e.nativeEvent.contentOffset.x / SCREEN_WIDTH))}
         >
-          {ONBOARDING_SLIDES.map((slide) => (
+          {ONBOARDING_SLIDES.map((slide, i) => (
             <View key={slide.key} style={[styles.slide, { width: SCREEN_WIDTH }]}>
-              <View style={styles.iconCircle}>
+              <View style={[styles.iconBox, i === 1 && styles.iconBoxSquircle, i === 2 && styles.iconBoxTilted]}>
                 <Ionicons name={slide.icon} size={theme.iconSize.lg} color={theme.colors.black} />
               </View>
               <Sticker label={slide.step} color={theme.colors.white} rotate={theme.rotation.slightNeg} />
@@ -76,18 +76,12 @@ export default function OnboardingModal() {
             ))}
           </View>
           <View style={styles.buttons}>
-            <Button
-              title="Don't show again"
-              variant="ghost"
-              onPress={handleDontShowAgain}
-              style={styles.flexBtn}
-              textStyle={styles.btnTextSmall}
-            />
-            <Button
-              title={isLast ? 'Home' : 'Next'}
-              onPress={handleNextOrHome}
-              style={styles.flexBtn}
-            />
+            <Button title="Don't show again" variant="ghost" onPress={handleDontShowAgain} style={styles.flexBtn} textStyle={styles.btnTextSmall} />
+            {isLast ? (
+              <NeoPill title="Home" onPress={() => setVisible(false)} style={styles.flexBtn} />
+            ) : (
+              <Button title="Next" onPress={handleNextOrHome} style={styles.flexBtn} />
+            )}
           </View>
         </View>
       </SafeAreaView>
@@ -96,20 +90,19 @@ export default function OnboardingModal() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  blobAnchor: { position: 'absolute', top: -theme.spacing.lg, right: -theme.spacing.lg, opacity: 0.6 },
-  topBar: { flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: theme.spacing.xl, paddingTop: theme.spacing.sm },
-  skipBtn: { padding: theme.spacing.xs },
-  skipText: { fontFamily: theme.fonts.bold, fontSize: theme.fontSize.sm, color: theme.colors.black },
+  container: { flex: 1, overflow: 'hidden' },
+  topBar: { flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: theme.spacing.xl, paddingTop: theme.spacing.md, minHeight: 48 },
   slide: { flex: 1, padding: theme.spacing.xxxl, justifyContent: 'center', gap: theme.spacing.lg },
-  iconCircle: { width: 64, height: 64, borderRadius: theme.radii.pill, backgroundColor: theme.colors.white, borderWidth: theme.borderWidth.card, borderColor: theme.colors.black, alignItems: 'center', justifyContent: 'center' },
+  iconBox: { width: 68, height: 68, borderRadius: theme.radii.pill, backgroundColor: theme.colors.white, borderWidth: theme.borderWidth.card, borderColor: theme.colors.black, alignItems: 'center', justifyContent: 'center' },
+  iconBoxSquircle: { borderRadius: theme.radii.lg },
+  iconBoxTilted: { borderRadius: theme.radii.card, transform: [{ rotate: theme.rotation.slightPos }] },
   title: { fontFamily: theme.fonts.heading, fontSize: theme.fontSize.xxl, lineHeight: theme.lineHeight.xxl, color: theme.colors.black },
   desc: { fontFamily: theme.fonts.body, fontSize: theme.fontSize.md, lineHeight: theme.lineHeight.md, color: theme.colors.black },
   footer: { padding: theme.spacing.xl, gap: theme.spacing.lg },
   dots: { flexDirection: 'row', justifyContent: 'center', gap: theme.spacing.sm },
   dot: { width: 10, height: 10, borderRadius: theme.radii.pill, backgroundColor: 'rgba(0,0,0,0.2)' },
   activeDot: { width: 24, backgroundColor: theme.colors.black },
-  buttons: { flexDirection: 'row', gap: theme.spacing.md },
-  flexBtn: { flex: 1, paddingHorizontal: theme.spacing.sm },
+  buttons: { flexDirection: 'row', gap: theme.spacing.md, alignItems: 'center' },
+  flexBtn: { flex: 1 },
   btnTextSmall: { fontSize: theme.fontSize.xs, lineHeight: theme.lineHeight.xs },
 });
