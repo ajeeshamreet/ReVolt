@@ -9,16 +9,24 @@ import { useUserLocation } from '../lib/useUserLocation';
 import { withDistance } from '../lib/geo';
 import { theme } from '../theme';
 
+const NEARBY_RADIUS_KM = 50;
+
 export default function FacilityPickerModal({ visible, onClose, onSelect }) {
   const [query, setQuery] = useState('');
   const { coords } = useUserLocation();
 
   const sorted = useMemo(() => withDistance(facilities, coords), [coords]);
+
+  const nearby = useMemo(() => {
+    const withinRadius = sorted.filter((f) => f.km != null && f.km <= NEARBY_RADIUS_KM);
+    return withinRadius.length > 0 ? withinRadius : sorted.filter((f) => f.km != null).slice(0, 5);
+  }, [sorted]);
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return sorted;
-    return sorted.filter((f) => f.name.toLowerCase().includes(q) || f.address.toLowerCase().includes(q));
-  }, [sorted, query]);
+    if (!q) return nearby;
+    return nearby.filter((f) => f.name.toLowerCase().includes(q) || f.address.toLowerCase().includes(q));
+  }, [nearby, query]);
 
   return (
     <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
@@ -48,14 +56,22 @@ export default function FacilityPickerModal({ visible, onClose, onSelect }) {
             )}
           </View>
 
+          <Text style={styles.depotsNearText}>
+            {query.trim()
+              ? `${filtered.length} ${filtered.length === 1 ? 'depot' : 'depots'} found`
+              : `${nearby.length} ${nearby.length === 1 ? 'depot' : 'depots'} near you`}
+          </Text>
+
           <ScrollView style={styles.list} contentContainerStyle={styles.listContent}>
-            {filtered.map((facility) => (
-              <FacilityPickerRow
-                key={facility.id}
-                facility={facility}
-                onSelect={onSelect}
-              />
-            ))}
+            {filtered.length === 0 ? (
+              <View style={styles.empty}>
+                <Text style={styles.emptyText}>No nearby depots found</Text>
+              </View>
+            ) : (
+              filtered.map((facility) => (
+                <FacilityPickerRow key={facility.id} facility={facility} onSelect={onSelect} />
+              ))
+            )}
           </ScrollView>
 
           <Button title="Cancel" variant="ghost" onPress={onClose} style={styles.cancelBtn} />
@@ -93,7 +109,10 @@ const styles = StyleSheet.create({
     gap: theme.spacing.sm,
   },
   searchInput: { flex: 1, fontFamily: theme.fonts.body, fontSize: theme.fontSize.sm, color: theme.colors.black },
+  depotsNearText: { fontFamily: theme.fonts.bold, fontSize: theme.fontSize.xs, color: theme.colors.greyDark, marginTop: -theme.spacing.xs },
   list: { maxHeight: 300 },
   listContent: { gap: theme.spacing.sm, paddingVertical: theme.spacing.xs },
+  empty: { paddingVertical: theme.spacing.xl, alignItems: 'center' },
+  emptyText: { fontFamily: theme.fonts.body, fontSize: theme.fontSize.sm, color: theme.colors.greyDark },
   cancelBtn: { marginTop: theme.spacing.xs },
 });

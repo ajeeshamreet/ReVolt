@@ -5,6 +5,7 @@ import { router } from 'expo-router';
 import Sticker from '../../components/Sticker';
 import DeviceCard from '../../components/DeviceCard';
 import RecycleCalculator from '../../components/RecycleCalculator';
+import RecycleEmptyState from '../../components/RecycleEmptyState';
 import FacilityPickerModal from '../../components/FacilityPickerModal';
 import SuccessModal from '../../components/SuccessModal';
 import { devices } from '../../data/devices';
@@ -13,13 +14,18 @@ import { useWallet } from '../../lib/useWallet';
 import { theme } from '../../theme';
 
 export default function RecycleScreen() {
-  const [selectedDevice, setSelectedDevice] = useState(devices[0]);
+  const [selectedDevice, setSelectedDevice] = useState(null);
   const [condition, setCondition] = useState('working');
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   const [successData, setSuccessData] = useState(null);
   const { addDropOff } = useWallet();
 
+  const handleSelectDevice = (device) => {
+    setSelectedDevice((prev) => (prev?.id === device.id ? null : device));
+  };
+
   const handleSelectFacility = async (facility) => {
+    if (!selectedDevice) return;
     setIsPickerOpen(false);
     const points = pointsFor(selectedDevice, condition);
     await addDropOff({ device: selectedDevice.name, points, facility: facility.name });
@@ -27,6 +33,7 @@ export default function RecycleScreen() {
   };
 
   const handleNavigateMap = () => {
+    if (!selectedDevice) return;
     router.navigate({
       pathname: '/',
       params: { category: selectedDevice.category },
@@ -50,12 +57,12 @@ export default function RecycleScreen() {
               key={device.id}
               device={device}
               isSelected={selectedDevice?.id === device.id}
-              onSelect={() => setSelectedDevice(device)}
+              onSelect={() => handleSelectDevice(device)}
             />
           ))}
         </View>
 
-        {selectedDevice && (
+        {selectedDevice ? (
           <RecycleCalculator
             device={selectedDevice}
             condition={condition}
@@ -63,6 +70,8 @@ export default function RecycleScreen() {
             onNavigateMap={handleNavigateMap}
             onConfirmDropOff={() => setIsPickerOpen(true)}
           />
+        ) : (
+          <RecycleEmptyState />
         )}
       </ScrollView>
 
