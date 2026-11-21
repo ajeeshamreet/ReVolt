@@ -12,6 +12,7 @@ export default function RecycleCalculator({
   condition,
   onConditionChange,
   onNavigateMap,
+  onConfirmDropOff,
 }) {
   const targetPoints = pointsFor(device, condition);
   const [displayPoints, setDisplayPoints] = useState(targetPoints);
@@ -63,7 +64,10 @@ export default function RecycleCalculator({
         </View>
       </View>
 
-      <Button title="Find a drop-off point" onPress={onNavigateMap} />
+      <View style={styles.actions}>
+        <Button title="Confirm drop-off" onPress={onConfirmDropOff} />
+        <Button title="Find a drop-off point" variant="ghost" onPress={onNavigateMap} />
+      </View>
     </Card>
   );
 }
@@ -99,4 +103,5 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   stickersRow: { flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacing.sm, marginTop: theme.spacing.xs },
+  actions: { gap: theme.spacing.sm, marginTop: theme.spacing.xs },
 });
