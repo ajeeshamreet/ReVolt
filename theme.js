@@ -92,6 +92,10 @@ export const theme = {
     handleWidth: 36,
     handleHeight: 4,
   },
+  controls: {
+    searchHeight: 46,
+    chipHeight: 34,
+  },
   blobSize: {
     sm: 64,
     md: 96,
