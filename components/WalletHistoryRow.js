@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { Pressable, View, Text, StyleSheet } from 'react-native';
 import Sticker from './Sticker';
 import { theme } from '../theme';
 
@@ -15,7 +15,13 @@ export default function WalletHistoryRow({ item, index }) {
   const rowColor = PASTEL_PALETTE[index % PASTEL_PALETTE.length];
 
   return (
-    <View style={[styles.row, { backgroundColor: rowColor }]}>
+    <Pressable
+      style={({ pressed }) => [
+        styles.row,
+        { backgroundColor: rowColor },
+        pressed && styles.pressed,
+      ]}
+    >
       <View style={styles.leftCol}>
         <Text style={styles.deviceTitle}>{item.device}</Text>
         <Text style={styles.metaText}>
@@ -26,7 +32,7 @@ export default function WalletHistoryRow({ item, index }) {
         label={`+${item.points} pts`}
         color={theme.colors.white}
       />
-    </View>
+    </Pressable>
   );
 }
 
@@ -40,6 +46,10 @@ const styles = StyleSheet.create({
     borderWidth: theme.borderWidth.card,
     borderColor: theme.colors.black,
     gap: theme.spacing.md,
+  },
+  pressed: {
+    opacity: 0.85,
+    transform: [{ scale: 0.98 }],
   },
   leftCol: {
     flex: 1,

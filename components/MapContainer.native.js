@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { View, Text, StyleSheet, Platform } from 'react-native';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Polyline } from 'react-native-maps';
 import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
+import { useLocalSearchParams } from 'expo-router';
 import { theme } from '../theme';
 import { useUserLocation, CITY_CENTER_COORDS } from '../lib/useUserLocation';
-import { withDistance } from '../lib/geo';
+import { withDistance, toRegion } from '../lib/geo';
 import { useFacilityFilter } from '../lib/useFacilityFilter';
 import { mapStyle } from '../lib/mapStyle';
 import facilitiesData from '../data/facilities.json';
@@ -13,44 +14,35 @@ import FacilityRow from './FacilityRow';
 import UserLocationMarker from './UserLocationMarker';
 import MapSearchBar from './MapSearchBar';
 import SheetEmptyState from './SheetEmptyState';
-
-const toRegion = (lat, lng) => ({
-  latitude: lat,
-  longitude: lng,
-  latitudeDelta: theme.map.latitudeDelta,
-  longitudeDelta: theme.map.longitudeDelta,
-});
+import SelectedFacilitySheet from './SelectedFacilitySheet';
 
 export default function MapContainer() {
   const mapRef = useRef(null);
   const sheetRef = useRef(null);
-  const { coords } = useUserLocation();
+  const { category } = useLocalSearchParams();
+  const { coords, status } = useUserLocation();
   const [selectedId, setSelectedId] = useState(null);
   const [search, setSearch] = useState('');
   const [selectedChips, setSelectedChips] = useState([]);
 
-  const snapPoints = useMemo(() => ['18%', '45%', '85%'], []);
+  useEffect(() => {
+    if (category) setSelectedChips([category]);
+  }, [category]);
+
+  const snapPoints = useMemo(() => ['18%', '48%', '85%'], []);
   const sorted = useMemo(() => withDistance(facilitiesData, coords), [coords]);
   const visible = useFacilityFilter(sorted, search, selectedChips);
-  const initialTarget = coords || CITY_CENTER_COORDS;
+  const selectedFacility = useMemo(() => sorted.find((f) => f.id === selectedId), [sorted, selectedId]);
+  const userPoint = coords || CITY_CENTER_COORDS;
 
   const handleSelect = (facility) => {
     setSelectedId(facility.id);
-    mapRef.current?.animateToRegion(toRegion(facility.lat, facility.lng), 400);
+    mapRef.current?.fitToCoordinates(
+      [userPoint, { latitude: facility.lat, longitude: facility.lng }],
+      { edgePadding: { top: 120, right: 60, bottom: 260, left: 60 }, animated: true }
+    );
     sheetRef.current?.snapToIndex(1);
   };
-
-  const handleToggleChip = (chip) => {
-    setSelectedChips((prev) =>
-      prev.includes(chip) ? prev.filter((c) => c !== chip) : [...prev, chip]
-    );
-  };
-
-  useEffect(() => {
-    if (coords && mapRef.current) {
-      mapRef.current.animateToRegion(toRegion(coords.latitude, coords.longitude), 500);
-    }
-  }, [coords]);
 
   return (
     <View style={styles.container}>
@@ -58,7 +50,9 @@ export default function MapContainer() {
         search={search}
         onSearchChange={setSearch}
         selectedChips={selectedChips}
-        onToggleChip={handleToggleChip}
+        onToggleChip={(chip) => setSelectedChips((p) => p.includes(chip) ? p.filter((c) => c !== chip) : [...p, chip])}
+        locationStatus={status}
+        onUseCityCentre={() => mapRef.current?.animateToRegion(toRegion(CITY_CENTER_COORDS.latitude, CITY_CENTER_COORDS.longitude), 500)}
       />
       <MapView
         ref={mapRef}
@@ -68,41 +62,40 @@ export default function MapContainer() {
         mapType={Platform.OS === 'ios' ? 'mutedStandard' : 'standard'}
         showsUserLocation={false}
         showsMyLocationButton={false}
-        initialRegion={toRegion(initialTarget.latitude, initialTarget.longitude)}
+        initialRegion={toRegion(userPoint.latitude, userPoint.longitude)}
       >
         <UserLocationMarker coords={coords} />
-        {visible.map((f) => (
-          <FacilityMarker
-            key={f.id}
-            facility={f}
-            isSelected={selectedId === f.id}
-            onSelect={() => handleSelect(f)}
+        {selectedFacility && (
+          <Polyline
+            coordinates={[userPoint, { latitude: selectedFacility.lat, longitude: selectedFacility.lng }]}
+            strokeColor={theme.colors.black}
+            strokeWidth={3}
+            lineDashPattern={[6, 4]}
           />
+        )}
+        {visible.map((f) => (
+          <FacilityMarker key={f.id} facility={f} isSelected={selectedId === f.id} onSelect={() => handleSelect(f)} />
         ))}
       </MapView>
 
-      <BottomSheet
-        ref={sheetRef}
-        index={0}
-        snapPoints={snapPoints}
-        handleIndicatorStyle={styles.handle}
-        backgroundStyle={styles.sheetBg}
-      >
-        <View style={styles.sheetHeader}>
-          <Text style={styles.sheetTitle}>Nearby drop-off points ({visible.length})</Text>
-        </View>
-        <BottomSheetFlatList
-          data={visible}
-          keyExtractor={(item) => item.id}
-          ListEmptyComponent={SheetEmptyState}
-          renderItem={({ item }) => (
-            <FacilityRow
-              facility={item}
-              isSelected={selectedId === item.id}
-              onPress={() => handleSelect(item)}
+      <BottomSheet ref={sheetRef} index={0} snapPoints={snapPoints} handleIndicatorStyle={styles.handle} backgroundStyle={styles.sheetBg}>
+        {selectedFacility ? (
+          <SelectedFacilitySheet facility={selectedFacility} onBack={() => { setSelectedId(null); sheetRef.current?.snapToIndex(0); }} />
+        ) : (
+          <>
+            <View style={styles.sheetHeader}>
+              <Text style={styles.sheetTitle}>Nearby drop-off points ({visible.length})</Text>
+            </View>
+            <BottomSheetFlatList
+              data={visible}
+              keyExtractor={(item) => item.id}
+              ListEmptyComponent={SheetEmptyState}
+              renderItem={({ item }) => (
+                <FacilityRow facility={item} isSelected={selectedId === item.id} onPress={() => handleSelect(item)} />
+              )}
             />
-          )}
-        />
+          </>
+        )}
       </BottomSheet>
     </View>
   );

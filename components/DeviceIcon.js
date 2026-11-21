@@ -43,16 +43,14 @@ export default function DeviceIcon({ id, size = 38 }) {
         <Svg width={size} height={size} viewBox="0 0 32 32">
           <Rect x="4" y="4" width="24" height="17" rx="2" fill="#FFFFFF" {...c} />
           <Rect x="7" y="7" width="18" height="11" rx="1" fill="#FFFFFF" {...c} strokeWidth={1.5} />
-          <Line x1="16" y1="21" x2="16" y2="25" {...c} />
-          <Line x1="11" y1="25" x2="21" y2="25" {...c} />
+          <Line x1="16" y1="21" x2="16" y2="25" {...c} /><Line x1="11" y1="25" x2="21" y2="25" {...c} />
         </Svg>
       );
     case 'charger':
       return (
         <Svg width={size} height={size} viewBox="0 0 32 32">
           <Rect x="8" y="9" width="16" height="13" rx="3" fill="#FFFFFF" {...c} />
-          <Line x1="12" y1="4" x2="12" y2="9" {...c} strokeWidth={2.5} />
-          <Line x1="20" y1="4" x2="20" y2="9" {...c} strokeWidth={2.5} />
+          <Line x1="12" y1="4" x2="12" y2="9" {...c} strokeWidth={2.5} /><Line x1="20" y1="4" x2="20" y2="9" {...c} strokeWidth={2.5} />
           <Path d="M16 22 V26 C16 29 23 27 23 30" fill="none" {...c} />
         </Svg>
       );
@@ -73,21 +71,17 @@ export default function DeviceIcon({ id, size = 38 }) {
     case 'smartwatch':
       return (
         <Svg width={size} height={size} viewBox="0 0 32 32">
-          <Rect x="11" y="2" width="10" height="5" rx="1" fill="#FFFFFF" {...c} />
-          <Rect x="11" y="25" width="10" height="5" rx="1" fill="#FFFFFF" {...c} />
-          <Circle cx="16" cy="16" r="9" fill="#FFFFFF" {...c} />
-          <Path d="M16 11 V16 H19" fill="none" {...c} />
+          <Rect x="11" y="2" width="10" height="5" rx="1" fill="#FFFFFF" {...c} /><Rect x="11" y="25" width="10" height="5" rx="1" fill="#FFFFFF" {...c} />
+          <Circle cx="16" cy="16" r="9" fill="#FFFFFF" {...c} /><Path d="M16 11 V16 H19" fill="none" {...c} />
         </Svg>
       );
     case 'desktop':
       return (
         <Svg width={size} height={size} viewBox="0 0 32 32">
           <Rect x="2" y="6" width="16" height="12" rx="2" fill="#FFFFFF" {...c} />
-          <Line x1="10" y1="18" x2="10" y2="21" {...c} />
-          <Line x1="7" y1="21" x2="13" y2="21" {...c} />
+          <Line x1="10" y1="18" x2="10" y2="21" {...c} /><Line x1="7" y1="21" x2="13" y2="21" {...c} />
           <Rect x="21" y="5" width="9" height="18" rx="2" fill="#FFFFFF" {...c} />
-          <Line x1="23.5" y1="8" x2="27.5" y2="8" {...c} strokeWidth={1.5} />
-          <Circle cx="25.5" cy="18" r="1" fill="#000" />
+          <Line x1="23.5" y1="8" x2="27.5" y2="8" {...c} strokeWidth={1.5} /><Circle cx="25.5" cy="18" r="1" fill="#000" />
         </Svg>
       );
     case 'console':
@@ -95,8 +89,7 @@ export default function DeviceIcon({ id, size = 38 }) {
         <Svg width={size} height={size} viewBox="0 0 32 32">
           <Path d="M6 10 C10 9 22 9 26 10 C29 11 30 17 28 23 C26.8 26.5 23 25 21 21 L19 18 H13 L11 21 C9 25 5.2 26.5 4 23 C2 17 3 11 6 10 Z" fill="#FFFFFF" {...c} />
           <Path d="M8 14 H12 M10 12 V16" fill="none" {...c} strokeWidth={1.5} />
-          <Circle cx="21" cy="13" r="1" fill="#000" />
-          <Circle cx="23" cy="15" r="1" fill="#000" />
+          <Circle cx="21" cy="13" r="1" fill="#000" /><Circle cx="23" cy="15" r="1" fill="#000" />
         </Svg>
       );
     case 'microwave':

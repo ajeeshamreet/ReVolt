@@ -2,6 +2,7 @@ import { View, TextInput, ScrollView, StyleSheet, Pressable } from 'react-native
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import FilterChip from './FilterChip';
+import LocationBanner from './LocationBanner';
 import { theme } from '../theme';
 
 const DEFAULT_CHIPS = ['Open now', 'phones', 'laptops', 'batteries', 'appliances', 'tv', 'cables'];
@@ -12,6 +13,8 @@ export default function MapSearchBar({
   chips = DEFAULT_CHIPS,
   selectedChips,
   onToggleChip,
+  locationStatus,
+  onUseCityCentre,
 }) {
   const insets = useSafeAreaInsets();
 
@@ -48,6 +51,8 @@ export default function MapSearchBar({
           />
         ))}
       </ScrollView>
+
+      <LocationBanner status={locationStatus} onUseCityCentre={onUseCityCentre} />
     </View>
   );
 }

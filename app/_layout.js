@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { View, ActivityIndicator, StyleSheet, LogBox } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 import {
   useFonts,
   BricolageGrotesque_500Medium,
@@ -9,6 +10,7 @@ import {
   BricolageGrotesque_800ExtraBold,
 } from '@expo-google-fonts/bricolage-grotesque';
 import * as SplashScreen from 'expo-splash-screen';
+import OnboardingModal from '../components/OnboardingModal';
 import { theme } from '../theme';
 
 SplashScreen.preventAutoHideAsync();
@@ -40,7 +42,9 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={styles.root}>
+      <StatusBar style="dark" />
       <Stack screenOptions={{ headerShown: false }} />
+      <OnboardingModal />
     </GestureHandlerRootView>
   );
 }

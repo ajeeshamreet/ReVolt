@@ -26,6 +26,13 @@ export default function RecycleScreen() {
     setSuccessData({ device: selectedDevice.name, points, facility: facility.name });
   };
 
+  const handleNavigateMap = () => {
+    router.navigate({
+      pathname: '/',
+      params: { category: selectedDevice.category },
+    });
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.container}>
@@ -53,7 +60,7 @@ export default function RecycleScreen() {
             device={selectedDevice}
             condition={condition}
             onConditionChange={setCondition}
-            onNavigateMap={() => router.navigate('/')}
+            onNavigateMap={handleNavigateMap}
             onConfirmDropOff={() => setIsPickerOpen(true)}
           />
         )}
