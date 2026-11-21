@@ -77,14 +77,20 @@ export const theme = {
   marker: {
     userRing: 22,
     userDot: 10,
-    facilitySize: 32,
-    facilitySizeSelected: 44,
-    facilityIcon: 16,
-    facilityIconSelected: 22,
+    pinWidth: 32,
+    pinHeight: 40,
+    pinWidthSelected: 42,
+    pinHeightSelected: 52,
+    pinIcon: 16,
+    pinIconSelected: 22,
   },
   map: {
     latitudeDelta: 0.1,
     longitudeDelta: 0.1,
+  },
+  sheet: {
+    handleWidth: 36,
+    handleHeight: 4,
   },
   blobSize: {
     sm: 64,
