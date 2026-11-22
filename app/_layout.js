@@ -1,15 +1,15 @@
-import { useEffect } from 'react';
-import { View, ActivityIndicator, StyleSheet, LogBox } from 'react-native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
 import {
-  useFonts,
   BricolageGrotesque_500Medium,
   BricolageGrotesque_700Bold,
   BricolageGrotesque_800ExtraBold,
+  useFonts,
 } from '@expo-google-fonts/bricolage-grotesque';
+import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
+import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
+import { ActivityIndicator, LogBox, StyleSheet, View } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import OnboardingModal from '../components/OnboardingModal';
 import { theme } from '../theme';
 

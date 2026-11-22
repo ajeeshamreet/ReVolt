@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Blob from './Blob';
 
 export default function OnboardingBackdrop({ shapeType }) {
