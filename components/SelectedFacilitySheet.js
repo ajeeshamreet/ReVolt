@@ -3,7 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Sticker from './Sticker';
 import Button from './Button';
 import { isOpenNow } from '../lib/isOpenNow';
-import { openDirections } from '../lib/directions';
+import { openDirections, openGooglePage } from '../lib/directions';
 import { theme } from '../theme';
 
 export default function SelectedFacilitySheet({ facility, onBack }) {
@@ -52,6 +52,11 @@ export default function SelectedFacilitySheet({ facility, onBack }) {
         <Button
           title="Start Journey ➔"
           onPress={() => openDirections(facility)}
+        />
+        <Button
+          title="View on Google ↗"
+          variant="ghost"
+          onPress={() => openGooglePage(facility)}
         />
         <Button
           title="Back to all drop-offs"
