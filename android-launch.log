@@ -1,0 +1,2 @@
+--------- beginning of main
+11-23 15:47:30.175 I/adbd    (19846): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-v' 'time''
