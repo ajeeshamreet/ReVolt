@@ -1,17 +1,15 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
-import { View, Text, StyleSheet, Platform } from 'react-native';
-import MapView, { PROVIDER_GOOGLE, Polyline } from 'react-native-maps';
+import { View, Text, StyleSheet } from 'react-native';
 import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { useLocalSearchParams } from 'expo-router';
 import { theme } from '../theme';
 import { useUserLocation, CITY_CENTER_COORDS } from '../lib/useUserLocation';
-import { withDistance, toRegion } from '../lib/geo';
+import { withDistance } from '../lib/geo';
 import { useFacilityFilter } from '../lib/useFacilityFilter';
-import { mapStyle } from '../lib/mapStyle';
+import { isOpenNow } from '../lib/isOpenNow';
 import facilitiesData from '../data/facilities.json';
-import FacilityMarker from './FacilityMarker';
+import OpenFreeMapView from './OpenFreeMapView';
 import FacilityRow from './FacilityRow';
-import UserLocationMarker from './UserLocationMarker';
 import MapSearchBar from './MapSearchBar';
 import SheetEmptyState from './SheetEmptyState';
 import SelectedFacilitySheet from './SelectedFacilitySheet';
@@ -35,13 +33,23 @@ export default function MapContainer() {
   const selectedFacility = useMemo(() => sorted.find((f) => f.id === selectedId), [sorted, selectedId]);
   const userPoint = coords || CITY_CENTER_COORDS;
 
+  const mapFacilities = useMemo(() => {
+    return visible.map((f) => {
+      const open = isOpenNow(f.hours);
+      const isNearlyFull = Boolean(f.nearlyFull || f.status === 'nearly_full');
+      const st = !open ? 'closed' : isNearlyFull ? 'nearly_full' : 'open';
+      return { id: f.id, name: f.name, lat: f.lat, lng: f.lng, status: st };
+    });
+  }, [visible]);
+
   const handleSelect = (facility) => {
     setSelectedId(facility.id);
-    mapRef.current?.fitToCoordinates(
-      [userPoint, { latitude: facility.lat, longitude: facility.lng }],
-      { edgePadding: { top: 120, right: 60, bottom: 260, left: 60 }, animated: true }
-    );
     sheetRef.current?.snapToIndex(1);
+  };
+
+  const handleSelectById = (id) => {
+    const facility = sorted.find((f) => f.id === id);
+    if (facility) handleSelect(facility);
   };
 
   return (
@@ -52,32 +60,20 @@ export default function MapContainer() {
         selectedChips={selectedChips}
         onToggleChip={(chip) => setSelectedChips((p) => p.includes(chip) ? p.filter((c) => c !== chip) : [...p, chip])}
         locationStatus={status}
-        onUseCityCentre={() => mapRef.current?.animateToRegion(toRegion(CITY_CENTER_COORDS.latitude, CITY_CENTER_COORDS.longitude), 500)}
+        onUseCityCentre={() => mapRef.current?.flyTo(CITY_CENTER_COORDS.longitude, CITY_CENTER_COORDS.latitude, 12)}
       />
-      <MapView
+      <OpenFreeMapView
         ref={mapRef}
-        style={styles.map}
-        provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : undefined}
-        customMapStyle={Platform.OS === 'android' ? mapStyle : undefined}
-        mapType={Platform.OS === 'ios' ? 'mutedStandard' : 'standard'}
-        showsUserLocation={false}
-        showsMyLocationButton={false}
-        initialRegion={toRegion(userPoint.latitude, userPoint.longitude)}
-      >
-        <UserLocationMarker coords={coords} />
-        {selectedFacility && (
-          <Polyline
-            coordinates={[userPoint, { latitude: selectedFacility.lat, longitude: selectedFacility.lng }]}
-            strokeColor={theme.colors.black}
-            strokeWidth={3}
-            lineDashPattern={[6, 4]}
-          />
-        )}
-        {visible.map((f) => (
-          <FacilityMarker key={f.id} facility={f} isSelected={selectedId === f.id} onSelect={() => handleSelect(f)} />
-        ))}
-      </MapView>
-
+        userPoint={userPoint}
+        facilities={mapFacilities}
+        selectedFacility={selectedFacility}
+        selectedId={selectedId}
+        onSelectFacility={handleSelectById}
+        onDeselect={() => {
+          setSelectedId(null);
+          sheetRef.current?.snapToIndex(0);
+        }}
+      />
       <BottomSheet ref={sheetRef} index={0} snapPoints={snapPoints} handleIndicatorStyle={styles.handle} backgroundStyle={styles.sheetBg}>
         {selectedFacility ? (
           <SelectedFacilitySheet facility={selectedFacility} onBack={() => { setSelectedId(null); sheetRef.current?.snapToIndex(0); }} />
@@ -103,7 +99,6 @@ export default function MapContainer() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, width: '100%', height: '100%' },
-  map: { width: '100%', height: '100%' },
   handle: { backgroundColor: theme.colors.black, width: theme.sheet.handleWidth, height: theme.sheet.handleHeight },
   sheetBg: { backgroundColor: theme.colors.white, borderTopLeftRadius: theme.radii.card, borderTopRightRadius: theme.radii.card },
   sheetHeader: { paddingHorizontal: theme.spacing.xl, paddingVertical: theme.spacing.md, borderBottomWidth: theme.borderWidth.thin, borderBottomColor: theme.colors.greyMedium },
